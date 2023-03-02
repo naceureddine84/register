@@ -1,0 +1,73 @@
+.accordion {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 0px 15px;
+}
+.accordion h2 {
+  text-align: center;
+}
+.accordion .accordion-content {
+  background-color: #e7c697;
+  border: 1px solid #fffdd0;
+  border-radius: 4px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+.accordion .accordion-content:nth-child(2) {
+  background-color: #c3b091;
+  border: 1px solid #fffdd0;
+}
+.accordion .accordion-content:nth-child(3) {
+  background-color: #1dacd6;
+  border: 1px solid #1dacd6;
+}
+.accordion .accordion-content:nth-child(4) {
+  background-color: #c7b446;
+  border: 1px solid #fff44f;
+}
+.accordion .accordion-content:nth-child(5) {
+  background-color: #007ba7;
+  border: 1px solid #025669;
+}
+.accordion .accordion-content:nth-child(6) {
+  background-color: #9fe2bf;
+  border: 1px solid #54ff9f;
+}
+.accordion-content.open {
+  padding-bottom: 10px;
+}
+.accordion-content .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: all 0.3s linear;
+}
+.accordion-content.open header {
+  min-height: 50px;
+}
+.accordion-content .description {
+  /* For starting Collapsed */
+  height:0px;
+  padding: 0 15px;
+  transition: all 0.3s linear;
+}
+
+.accordion-content .title {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 0;
+}
+.accordion-content .header i {
+  font-size: 18px;
+  cursor: pointer;
+}
+.page-item.active .page-link{
+  z-index: 0;
+}
+.btn{
+  z-index: 0!important;
+}

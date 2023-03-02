@@ -1,0 +1,79 @@
+ 
+#ToggleDarkLabel {
+	width:100px;
+	height:30px;
+	position: relative;
+	display: block;
+	background: #ebebeb;
+	border-radius: 50px;
+	box-shadow: inset 0px 5px 15px rgba(0,0,0,0.4), inset 0px -5px 15px rgba(255,255,255,0.4);
+	cursor: pointer;
+	transition: 0.3s;
+}
+#ToggleDarkLabel:after {
+	content: "";
+	width:25px;
+	height: 25px;
+	position: absolute;
+	top:3px;
+	left:7px;
+	background: linear-gradient(180deg,#ffcc89,#d8860b);
+	border-radius: 25px;
+	box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+	transition: 1s;
+}
+#darkmodeToggle {
+	width: 0;
+	height: 0;
+	visibility: hidden;
+}
+#darkmodeToggle:checked + #ToggleDarkLabel {
+	background: #242424;
+}
+#darkmodeToggle:checked + #ToggleDarkLabel:after {
+	left:90px;
+	transform: translateX(-100%);
+	background: linear-gradient(180deg,#777,#3a3a3a);
+}
+#ToggleDarkLabel:active:after{
+	width: 40px;
+}
+#darkmodeToggle:checked + #ToggleDarkLabel + .background {
+	background:#242424;
+}
+#ToggleDarkLabel svg {
+	position: absolute;
+	width: 20px;
+	top:6px;
+	z-index: 100;
+}
+#ToggleDarkLabel svg.sun {
+	left:10px;
+	fill:#fff;
+	transition: 0.3s;
+}
+#ToggleDarkLabel svg.moon {
+	left:68px;
+	fill:#7e7e7e;
+	transition: 0.3s;
+}
+#darkmodeToggle:checked + #ToggleDarkLabel svg.sun {
+	fill:#7e7e7e;
+}
+#darkmodeToggle:checked + #ToggleDarkLabel svg.moon {
+	fill:#fff;
+}
+
+.dark-version .select2-search input { background-color: #1a2035 ; color: #fff!important; }
+.dark-version .swal2-input { background-color: #1a2035 ; color: #fff!important; }
+.dark-version .swal2-textarea { background-color: #1a2035 ; color: #fff!important; }
+.dark-version .select2-search { background-color: #1a2035 ; }
+.dark-version .select2-results { background-color: #1a2035 ; }
+.dark-version .select2-container--default .select2-selection--single .select2-selection__rendered {  color: #fff!important;}
+.dark-version .select2-container--default .select2-results__option--selected { background-color: #1a5dca  ; color: #fff!important; }
+.dark-version .select2-container--default .select2-selection--single { background-color: #202940 ; color: #fff!important;}
+.dark-version .card { color: #eee;}
+.dark-version .page-link:focus { background-color: #0d6efd;}
+.dark-version .page-link:hover { background-color: #198754;}
+.dark-version #datatable_length > label > select { background-color: #1a2035;}
+.dark-version .pagination { --bs-pagination-bg: #202d76;  --bs-pagination-disabled-bg: #211722; }
