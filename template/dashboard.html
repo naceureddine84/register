@@ -1,0 +1,119 @@
+{% extends "base.html" %}{% load static %}
+{% block title %} Dashboard {% endblock %}
+{% block CustomHead %}
+<style>.swal2-popup{ width: 50em!important; }</style>
+<script src="/assets/vendor/echarts.min.js"></script>
+
+{% endblock CustomHead %} 
+{% block content %}
+   
+    <!-- End Navbar -->
+    <div class="container-fluid py-3 px-1">
+      <div class="row">
+        
+        <div class="col-xl-12 col-sm-12 mb-4">
+          <div class="card">
+            <div class="card-header p-3 pt-2">
+              <div class="icon icon-lg icon-shape bg-gradient-info shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                <i class="fa fa-list"></i>
+              </div>
+               <div class="text-end pt-1">
+                <span class=" h4 mb-0"> {{Count_all}} </span> <span class="h6">enregistrements</span>
+              </div>
+            </div>
+            <div class="card-body p-2">
+              <div id="MyChart1"  style="width: '100%';height:300px;"></div>
+            </div>
+            <hr class="dark horizontal my-0">
+
+            <div class="card-footer p-3">
+              <p class="mb-0"><span class="text-danger text-sm font-weight-bolder"></span></p>
+
+              <!-- <p class="mb-0"><span class="text-secondary text-sm font-weight-bolder"></span>  -->
+                <span class="float-end text-end"> 
+                  <a class="btn btn-link bg-gradient-info text-white px-4 mb-0" href="/registre_stat/"><i class="fa fa-users"></i> Afficher les détails. </a>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-xl-6 col-sm-6 mb-4">
+          <div class="card">
+            <div class="card-header  p-2">
+              <div class=" icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                <i class="far fa-check-square"></i>
+              </div>
+               <div class="text-end pt-4"></div>
+            </div>
+            <div class="card-body p-2">
+              <div id="MyChart2" style="height:300px"></div>
+            </div>
+            <hr class="dark horizontal my-0">
+         
+          </div>
+        </div>
+        <div class="col-xl-6 col-sm-6">
+          <div class="card">
+            <div class="card-header p-3 pt-2">
+              <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-icons opacity-10">emoji_emotions</i>
+              </div>
+               <div class="text-end pt-4"></div>
+
+            </div>
+            <div class="card-body p-2">
+              <div id="MyChart3" style="height:300px"></div>
+            </div>
+            <hr class="dark horizontal my-0">
+           
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  
+{% endblock content %}
+
+{% block JSAnnex %} 
+{% include "chartsfunctions.html" %}
+<script>
+  var w = window.innerWidth;
+
+
+  function AxisFix(data){
+    mydata = data.replace(/&#x27;/g,"\"");
+    mydata = mydata.replace(/&quot;/g,"\"");
+    return JSON.parse(mydata);
+  }
+  function PlotCharts(){
+    PlotBar ("MyChart1","{{Chart2_Title}}","{{Chart2_Desc}}",AxisFix("{{Chart2_xAxis}}"),AxisFix("{{Chart2_yAxis}}"),darkMode);
+    PlotPie ("MyChart2","{{Chart1_Title}}","{{Chart1_Desc}}",false,AxisFix("{{Chart1_xAxis}}"),AxisFix("{{Chart1_yAxis}}"),darkMode);
+    PlotPie ("MyChart3","{{Chart3_Title}}","{{Chart3_Desc}}",true,AxisFix("{{Chart3_xAxis}}"),AxisFix("{{Chart3_yAxis}}"),darkMode);
+  }
+  PlotCharts();
+  window.onresize = function() {
+    
+  };
+  
+onresize = (event) => {
+  if( w != window.innerWidth ){
+    let myChart1 = echarts.init(document.getElementById("MyChart1"),darkMode);
+    let myChart2 = echarts.init(document.getElementById("MyChart2"),darkMode);
+    let myChart3 = echarts.init(document.getElementById("MyChart3"),darkMode);
+    myChart1.dispose();
+    myChart2.dispose();
+    myChart3.dispose();
+    setTimeout(() => { PlotCharts()}, "500");
+    w = window.innerWidth;
+  }
+
+
+  //console.log("Resizing");
+  
+  
+};
+</script>
+{% endblock JSAnnex %}  
+ 

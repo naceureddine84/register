@@ -1,0 +1,10 @@
+<div class="text-center">
+  <p>
+    {% for message in messages %}
+    <div {% if message.tags %} class="alert alert-{{ message.tags }} h6 text-center text-white"{% endif %} role="alert">
+      {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} Error: {% endif %}
+      {{ message |safe}}
+    </div>
+    {% endfor %}
+  </p>
+</div>

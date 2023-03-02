@@ -1,0 +1,426 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Registre {% endblock %}
+{% block CustomHead %}
+<link rel="stylesheet" href="/assets/vendor/datatable/dataTables.bootstrap4.min.css?V3">
+<link rel="stylesheet" href="/assets/vendor/datatable/responsive.bootstrap4.min.css">
+<link href="/assets/vendor/bootstrap5.min.css" rel="stylesheet">
+{% endblock CustomHead %} 
+{% block content %}
+   
+    <!-- End Navbar -->
+    <div class="container-fluid py-3 px-1">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mt-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-danger shadow-danger border-radius-lg pt-3 pb-2">
+                <h6 class="text-white fw-bold ps-3"> <i class="fas fa-list"></i> Filtrer par</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <!--  -->
+              <div class="row m-2">
+                <div class="col-lg-6 col-md-12 ">
+                  <div class="input-group input-group-outline  m-1 is-filled">
+                    <!--  -->
+                    <label class="form-label" for="from">DU </label>
+                    <div class="form-group mb-0 w-100">
+                      <div class="input-group text-start w-100" dir="ltr">
+                          <input id="from" name="from"  type="text"  readonly  class="form-control pt-2 textLight center w-100 border-top-0" placeholder="Date Début" autocomplete="off" required/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                  <div class="input-group input-group-outline  my-1 is-filled">
+                    <!--  -->
+                    <label class="form-label" for="to">AU </label>
+                    <div class="form-group mb-0 w-100">
+                      <div class="input-group text-start w-100" dir="ltr">
+                          <input id="to" name="to"  type="text"  readonly  class="form-control pt-2 textLight center w-100 border-top-0" placeholder="Date Fin" autocomplete="off" required/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mx-2">
+                <div class="col-lg-3 col-md-12">
+                  <label class="form-label" for="status">État de commande </label>
+                  <div class="input-group input-group-outline mb-3">
+                  <select class="form-control js-example-basic-single w-100"  name="status" id="status" required>
+                    <option class="form-control" value="-">-- Tous les états de commande--</option>
+                    {% for status in statusList %}
+                      <option class="form-control" value="{{status.0}}">{{status.1}}</option>
+                    {% endfor %}
+                  </select>
+                  </div>
+                </div>
+                {% if user.role == 3 %}
+                    <div class="col-lg-3 col-md-12">
+                      <label class="form-label" for="dot">Directions Opérationnelles </label>
+                      <div class="input-group input-group-outline mb-3">
+                      <select class="form-control js-example-basic-single w-100"  name="dot" id="dot" required>
+                        <option class="form-control" value="-">-- Toutes les agences --</option>
+                        {% for Agence in AgenceList %}
+                          <option class="form-control" value="{{Agence.code}}">{{Agence.name}}</option>
+                        {% endfor %}
+                      </select>
+                      </div>
+                    </div>
+                {% else %}
+                    <div class="col-lg-3 col-md-12">
+                      <label class="form-label" for="agence">Agences commerciales </label>
+                      <div class="input-group input-group-outline mb-3">
+                      <select class="form-control js-example-basic-single w-100"  name="agence" id="agence" required>
+                        <option class="form-control" value="-">-- Toutes les agences --</option>
+                        {% for Agence in AgenceList %}
+                          <option class="form-control" value="{{Agence.code}}">{{Agence.name}}</option>
+                        {% endfor %}
+                      </select>
+                      </div>
+                    </div>
+                {% endif %}
+                
+                <div class="col-lg-3 col-md-12 ">
+                  <label class="form-label" for="type_registre">Type enregistrement </label>
+                  <div class="input-group input-group-outline mb-3">
+                    <select class="form-control js-example-basic-single"  name="type_registre" id="type_registre">
+                      <option class="form-control" value="-">-- Tous les types d'enregistrement --</option>
+                      {% for type in typeList %}
+                         <option class="form-control" value="{{type.0}}">{{type.1}}</option>
+                      {% endfor %}
+                     </select>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-12 ">
+                  <label class="form-label" for="satisfy">Satisfaction </label>
+                  <div class="input-group input-group-outline mb-3">
+                    <select class="form-control js-example-basic-single"  name="satisfy" id="satisfy">
+                      <option class="form-control" value="-">-- Toutes les satisfactions --</option>
+                      {% for satisfy in satisfyList %}
+                         <option class="form-control" value="{{satisfy.0}}">{{satisfy.1}}</option>
+                      {% endfor %}
+                     </select>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="text-center">
+                <button type="button"  class="btn btn-lg bg-gradient-info btn-lg    btn-block m-3 p-2 px-3"  onclick="GetData();"> <i class="fa fa-filter px-2"></i> Filtrer les registres</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card mt-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-secondary  shadow-secondary border-radius-lg pt-3 pb-2">
+                <h6 class="text-white ps-3"> <i class="fa fa-list-alt"></i> Liste des registres</h6>
+              </div>
+            </div>
+            <div class="card-body p-2">
+              <div class="table-responsive p-0">
+                <table id="datatable" class="table table-hover table-striped table-head-fixed align-items-center dt-responsive nowrap w-100 mb-0">
+                  <thead>
+                    <tr class="text-center">
+                      <th class="text-uppercase text-primary text-xs fw-bolder opacity-8 ps-2">id</th>
+                      <th class="text-uppercase text-primary text-xs fw-bolder opacity-8 ps-2 text-wrap">Date Signalement</th>
+                      <th class="text-uppercase text-primary text-xs fw-bolder opacity-8 ps-2">Type</th>
+                      <th class="text-uppercase text-primary text-xs fw-bolder opacity-8 ps-2">Agence</th>
+                      <th class="text-uppercase text-primary text-xs fw-bolder opacity-8 ps-2">DOT</th>
+                      <th class="text-uppercase text-primary text-xs fw-bolder opacity-8 ps-2">Satisfaction</th>
+                      <th class="text-uppercase text-primary text-xs fw-bolder opacity-8 ps-2  text-wrap">Date Traitement</th>
+                      <th class="text-uppercase text-primary text-xs fw-bolder opacity-8 ps-2 text-center">Contenu</th>
+                      <th class="text-uppercase text-primary text-xs fw-bolder opacity-8 ps-2">Etat</th>
+
+                    </tr>
+                  </thead>
+                  <tbody id="TBL">
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  
+{% endblock content %}
+{% block JSAnnex %} 
+    <script src="/assets/vendor/datatable/jspdf.umd.min.js" ></script>    
+    <!-- <script src="https://cdn.jsdelivr.net/npm/kjua@0.9.0/dist/kjua.min.js"></script> -->
+    <script src="/assets/vendor/datatable/jquery.dataTables.min.js"      type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/dataTables.bootstrap4.min.js"  type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/dataTables.responsive.min.js"  type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/responsive.bootstrap4.min.js"  type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/dataTables.buttons.min.js"     type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/jszip.min.js"                  type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/buttons.html5.min.js"          type="text/javascript"></script>
+<script>
+  let today = new Date().toISOString().split("T")[0];
+  var dateFormat = "yy-mm-dd",
+  from = $( "#from" ).datepicker({
+      defaultDate: today,
+      changeMonth: true,
+      dateFormat: 'yy-mm-dd',
+      numberOfMonths: 1,
+      showAnim: 'slideDown',
+      firstDay: 0,
+    })
+    .on( "change", function() {
+      to.datepicker( "option", "minDate", getDate( this ) );
+    }),
+  to = $( "#to" ).datepicker({
+    defaultDate: "+1w",
+    changeMonth: true,
+    dateFormat: 'yy-mm-dd',
+    numberOfMonths: 1,
+    showAnim: 'slideDown',
+    firstDay: 0,
+  })
+  .on( "change", function() {
+    from.datepicker( "option", "maxDate", getDate( this ) );
+  });
+  function getDate( element ) {
+    var date;
+    try {
+      date = $.datepicker.parseDate( dateFormat, element.value );
+    } catch( error ) {
+      date = null;
+    }
+
+    return date;
+  }
+  let tomorrow = new Date(new Date(today).setDate(new Date(today).getDate() + 1 )).toISOString().split("T")[0];
+  let previousMonth = new Date(new Date(today).setDate(new Date(today).getDate() - 30 )).toISOString().split("T")[0];
+  
+  $("#from").val(previousMonth);
+  $("#to").val(tomorrow);
+  $('#datatable').DataTable(); 
+  $( document ).ready(function() {
+    $('.js-example-basic-single').select2();
+    GetData(); 
+  });
+
+  function GetData() {
+    let dataArg = {
+        User: "{{user.username}}",
+        minDate: $("#from").val(),
+        maxDate: $("#to").val(),
+    };
+
+    if ($("#status").val() != "-"){         dataArg["Status"]   = $("#status").val() }
+    if ($("#satisfy").val() != "-"){        dataArg["Satisfy"]  = $("#satisfy").val() }
+    if ($("#type_registre").val() != "-"){  dataArg["Type"]     = $("#type_registre").val() }
+    if ($("#agence").val() != "-"){         dataArg["Actel"]    = $("#agence").val() }
+    if ($("#dot").val() != "-"){            dataArg["DOT"]    = $("#dot").val() }
+    Swal.fire({
+        title: "<strong class='textDark'> Merci de patienter </strong> ",
+        html: 'Extraction des données en cours...',
+    });
+    Swal.showLoading();
+    $.ajax({
+        type: "Get",
+        url: "/api/Doleance/",
+        data: dataArg,
+        dataType: 'json',
+        async: true,
+        headers:{"X-CSRFToken": "{{ csrf_token }}"},
+        success: function (Rslt) //on recieve of reply
+        {
+            //console.log(Rslt);
+            Page = "";
+            Rslt.forEach((element) => {
+              //========================================================
+              //========================================================
+                Page += '<tr id="row_'+ element.id+ '" > '+
+                '<td class="align-middle fw-bold text-xs text-center text-wrap">'+ element.id+ '</td>' +
+                '<td class="align-middle fw-bold text-xs text-center text-wrap">'+ element.dateCreate+ '</td>'+
+                '<td class="align-middle fw-bold text-xs text-center text-wrap">'+ element.regTypeName+ '</td>'+
+                '<td class="align-middle fw-bold text-xs text-center text-wrap">'+ element.Actel.name+ '</td>'+
+                '<td class="align-middle fw-bold text-xs text-center text-wrap">'+ element.Actel.DOT_Name+ '</td>';
+                switch(element.satisfy){
+                  case 0 :  satisfyLevel = "danger";break;
+                  case 1 :  satisfyLevel = "secondary";break;
+                  case 2 :  satisfyLevel = "success";break;
+                }
+                Page += '<td > <div class="align-middle bg-gradient-'+satisfyLevel+' fw-bold text-white text-center m-1 py-1" style="border-radius: 10px ;">'+ element.satisfyName+ '</div> </td>';
+                
+                //if(element.dateReview != null)
+                if(element.status != 0)
+                  Page += '<td class="align-middle fw-bold  text-xs text-center  text-wrap">'+ element.dateReview+ '</td>';
+                else
+                  Page += '<td class="align-middle text-xs text-center">En cours</td>' ;
+ 
+                if(element.contenu != null)
+                  Page += '<td class="align-middle text-xs text-center">'+
+                          '<a href="#"  onclick="DisplayPicture(\''+element.contenu+'\',\''+element.regTypeName+'\')" >'+
+                             '<img class="bg-cover img-thumbnail" loading="lazy" src='+element.contenu+' alt="Image Contenu" height="100px"  width="100px" >'+
+                          '</a>'+
+                        '</td>';
+                else
+                  Page += '<td class="align-middle text-xs text-center"><i class="fas fa-2x fa-eye-slash text-danger"></i></td>';
+
+                Page += '<td class="align-middle text-center">';
+                  if (element.status == 0)
+                    Page += '<a href="javascript:ModifyItem('+element.id+');" class="btn btn-warning mb-0"> En cours <i class="fas fa-edit"></i></a>';
+                  else
+                    Page += '<a href="javascript:DisplayComment(\''+element.comment+'\');" class="text-success mb-0 fw-bold"> <i class="far fa-check-circle"></i> Traitée </a>'
+                Page += '</td>';
+                Page += '</tr>';
+              //========================================================
+              //========================================================
+            })
+					  CustomConfigTable(Page, [0,1,2,3,4,5,6] ,$("#from").val() + " - " + $("#to").val() );
+             
+            Swal.close();
+        },
+        error: function (xhr, status, error) {
+            ErrorDisplay(xhr, status, error);
+        }
+
+    });
+    
+  }
+  function ModifyItem(theID){
+    var mySN="";
+    Swal.fire({
+      title:"Traiter l'enregistrement" ,
+      text: "Confirmer le traitement de l'enregistrement "+theID+"? ",
+      icon: "question",
+      input: 'textarea',
+        inputAttributes: {
+          autocapitalize: 'off',
+      },
+      showCancelButton: true,
+      cancelButtonColor: '#6c757d',
+      confirmButtonColor: '#4caf50',
+      confirmButtonText: 'Confirmer',
+      cancelButtonText: 'Annuler',
+      showLoaderOnConfirm: true,
+      backdrop: true,
+
+      preConfirm: (varInput) => { mySN = varInput; },
+      allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          url: "/api/Doleance/"+theID+"/",
+          type: "PATCH",
+          async: false,
+          scriptCharset: "utf-8",
+          data: {status:1, comment: result.value},
+          dataType: "JSON",
+          headers:{"X-CSRFToken": "{{ csrf_token }}"},
+          success: function (result) {
+            Swal.fire({
+              icon: 'success',
+              title: '<span class="textDark"> Traitée avec succès. </span>',
+              showConfirmButton: false,
+              timer: 1000
+            })
+            .then(() => { location.reload(); })
+          },
+          error: function (xhr, status, error) {
+            ErrorDisplay(xhr, status, error);
+          }
+              
+      })
+        }
+      });
+     
+  }
+  function StringFilter(data) {
+    let str = null
+    str = data.trim()
+    //str = str.replace(/[^a-zA-Z0-9 -:]/g, "")
+    str = str.replace('<div class="align-middle bg-gradient-info fw-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('<div class="align-middle bg-gradient-success fw-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('<div class="align-middle bg-gradient-danger fw-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('<div class="align-middle bg-gradient-warning fw-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('<div class="align-middle bg-gradient-info fw-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('<div class="align-middle bg-gradient-secondary fw-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('</div>',"").replace('&nbsp;',"").replace('&nbsp;',"")
+    str = str.replace('<a href="/media/voucher/',"")
+    str = str.replace('" target="_blank"> '," - ")
+    str = str.replace('</a>',"")
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  }
+  function CustomConfigTable(Page, VisibleColumn, DateRange) {
+         $.fn.dataTable.ext.pager.numbers_length = 5;
+    if ( $.fn.dataTable.isDataTable('#datatable') ) {
+        $('#datatable').DataTable().destroy();
+        $('datatable').empty();
+      }
+      if(Page != "-")
+        $("#TBL").html(Page);
+      $('#datatable').DataTable( {
+        //language: datatableAR ,  
+        
+        pageLength : 10,
+        dom: 'lBfrtip', //With ligne per page select
+        buttons: [
+                  {extend: 'excelHtml5',
+                  customize: function ( xlsx ){ var sheet = xlsx.xl.worksheets['sheet1.xml']; $('row c', sheet).attr( 's', '25' ); },
+                  autoFilter: true,sheetName: "All",orientation:'portrait',pageSize:'A4',title: "registres - "+ DateRange ,
+                  text: '<i class="fas fa-file-excel"></i> Exporter en XLSX ',className:'btn btn-outline-success btn-fw',exportOptions: {
+                      columns: VisibleColumn,
+                      format: {   body: function(data, row, column, node) { return StringFilter(data) }}
+                  }}, 
+                  {extend: 'csv', //pdfHtml5
+                    text: '<i class="fas fa-file-csv"></i> Exporter en CSV ',orientation:'landscape',title: "registres - "+ DateRange ,pageSize:'A4',className:'btn btn-outline-danger btn-fw',exportOptions: {
+                    columns: VisibleColumn,
+                    format: {   body: function(data, row, column, node) { return StringFilter(data) }}
+                    }},
+                ],
+                            
+        order:[[  0 , "desc" ]]
+        } );
+      $('#datatable').DataTable(); 
+  }
+  function DisplayPicture(myPicture,TypeReg){
+  //Page =  '<img class="img-thumbnail" src='+myPicture+' height="90%"  width="90%"/><a class="btn btn-primary   fw-bold m-3" download="'+ myPicture +'" href="'+ myPicture +'" title="Image"   target="_blank">Télécharger</a>';
+  Swal.fire({
+    title: TypeReg ,
+    //html: Page,
+    html: '<a class="btn btn-primary fw-bold m-3" download="'+ myPicture +'" href="'+ myPicture +'" title="Image"   target="_blank">Télécharger</a>  <button type="button" class="btn btn-danger m-2"  onclick="Swal.close();"  aria-label="">Fermer</button>',
+    width: '800px',
+    text: 'Modal with a custom image.',
+    imageUrl: myPicture,
+    imageWidth: 800,
+    padding: '1em',
+    backdrop: true,
+
+    //imageHeight: 200,
+    imageAlt: 'Image doléance',
+    showCancelButton: false,
+    showConfirmButton: false,
+    confirmButtonColor: '#4caf50',
+    confirmButtonText: 'Fermer',
+    });
+
+  }
+  function DisplayComment(myComment){
+    let mytitle = "Motif du traitement";
+    if (myComment.length==0)
+      mytitle = "Aucun motif du traitement";
+    Swal.fire({
+      title: mytitle ,
+      text: myComment,
+      backdrop: true,
+
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonColor: '#4caf50',
+      confirmButtonText: 'Fermer',
+      });
+  
+  }
+</script>
+
+  
+{% endblock JSAnnex %}  

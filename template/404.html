@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% load static %}
+{% block title %} Home Page{% endblock %}
+{% block CustomHead %}{% endblock CustomHead %} 
+{% block content %}
+ <!-- 404 -->
+ <section class="error-area">
+  <div class="error-item  mt-5">
+      <div class="text-center  mt-5">
+          <div class="error-text m-3">
+              <h1>404!</h1>
+              <p>Oops! La page que vous recherchez n'existe pas. Il a peut-être été déplacée ou supprimée.</p>
+              <span> Chemin non disponible : {{exception}}</span>
+
+              <br>
+              <a class=" mt-5 btn btn-primary" href="/"> la page d'accueil</a>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- End 404 -->
+{% endblock content %}
+{% block JSAnnex %} {% endblock JSAnnex %}  

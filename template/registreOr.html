@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Registre {% endblock %}
+{% block CustomHead %}
+<link rel="stylesheet" href="/assets/vendor/datatable/dataTables.bootstrap4.min.css?V3">
+<link rel="stylesheet" href="/assets/vendor/datatable/responsive.bootstrap4.min.css">
+<link href="/assets/vendor/bootstrap5.min.css" rel="stylesheet">
+<style>
+
+  
+.input-group.input-group-outline.is-focused .form-label,
+.input-group.input-group-outline.is-filled .form-label {
+  width: 100%;
+  /* z-index:1; */
+  height: 100%;
+  font-size: 0.6875rem !important;
+  color: #ffc107;
+  display: flex;
+  line-height: 1.25 !important;
+}
+
+.input-group.input-group-outline.is-focused .form-label:before,
+.input-group.input-group-outline.is-focused .form-label:after,
+.input-group.input-group-outline.is-filled .form-label:before,
+.input-group.input-group-outline.is-filled .form-label:after {
+  opacity: 1;
+}
+
+.input-group.input-group-outline.is-focused .form-label:before,
+.input-group.input-group-outline.is-focused .form-label:after,
+.input-group.input-group-outline.is-filled .form-label:before,
+.input-group.input-group-outline.is-filled .form-label:after {
+  border-top-color: #ffc107;
+  box-shadow: inset 0 1px #ffc107;
+}
+
+</style>
+{% endblock CustomHead %} 
+{% block content %}
+   
+    <!-- End Navbar -->
+    <div class="container-fluid py-3 px-1">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mt-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-secondary shadow-secondary border-radius-lg pt-3 pb-2">
+                <h6 class="text-white font-weight-bold ps-3"> <i class="fas fa-list"></i> Filtrer par</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <!--  -->
+              <div class="row m-2">
+                <div class="col-lg-6 col-md-12 ">
+                  <div class="input-group input-group-outline  m-1 is-filled">
+                    <!--  -->
+                    <label class="form-label" for="from">DU </label>
+                    <div class="form-group mb-0 w-100">
+                      <div class="input-group text-start w-100" dir="ltr">
+                          <input id="from" name="from"  type="text"  readonly  class="form-control pt-2 textLight center w-100 border-top-0" placeholder="Date Début" autocomplete="off" required/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+                  <div class="input-group input-group-outline  my-1 is-filled">
+                    <!--  -->
+                    <label class="form-label" for="to">AU </label>
+                    <div class="form-group mb-0 w-100">
+                      <div class="input-group text-start w-100" dir="ltr">
+                          <input id="to" name="to"  type="text"  readonly  class="form-control pt-2 textLight center w-100 border-top-0" placeholder="Date Fin" autocomplete="off" required/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mx-2">
+                
+                <div class="col-lg-12 col-md-12">
+                  <label class="form-label" for="centre">Liste des structures </label>
+                  <div class="input-group input-group-outline mb-3">
+                  <select class="form-control js-example-basic-single w-100"  name="centre" id="centre" required>
+                    <option class="form-control" value="-">-- Toutes les structures --</option>
+                    {% for Agence in AgenceList %}
+                      <option class="form-control" value="{{Agence.code}}">{{Agence.name}}</option>
+                    {% endfor %}
+                  </select>
+                  </div>
+                </div>
+                 
+              </div>
+          
+              <div class="text-center">
+                <button type="button"  class="btn btn-lg bg-gradient-info btn-lg    btn-block m-3 p-2 px-3"  onclick="GetData();"> <i class="fa fa-filter px-2"></i> Filtrer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card mt-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-warning  shadow-warning border-radius-lg pt-3 pb-2">
+                <h6 class="text-white ps-3"> <i class="fa fa-list-alt"></i> Liste</h6>
+              </div>
+            </div>
+            <div class="card-body p-2">
+              <div class="table-responsive p-0">
+                <table id="datatable" class="table table-hover table-striped table-head-fixed align-items-center dt-responsive nowrap w-100 mb-0">
+                  <thead>
+                    <tr class="text-center">
+                      <th class="text-uppercase text-primary text-xs font-weight-bolder opacity-8 ps-2">id</th>
+                      <th class="text-uppercase text-primary text-xs font-weight-bolder opacity-8 ps-2">Date</th>
+                      <th class="text-uppercase text-primary text-xs font-weight-bolder opacity-8 ps-2">Centre</th>
+                      <th class="text-uppercase text-primary text-xs font-weight-bolder opacity-8 ps-2 text-center">Contenu</th>
+                      <th class="text-uppercase text-primary text-xs font-weight-bolder opacity-8 ps-2">Observation</th>
+                    </tr>
+                  </thead>
+                  <tbody id="TBL">
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  
+{% endblock content %}
+{% block JSAnnex %} 
+    <script src="/assets/vendor/datatable/jspdf.umd.min.js" ></script>    
+    <!-- <script src="https://cdn.jsdelivr.net/npm/kjua@0.9.0/dist/kjua.min.js"></script> -->
+    <script src="/assets/vendor/datatable/jquery.dataTables.min.js"      type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/dataTables.bootstrap4.min.js"  type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/dataTables.responsive.min.js"  type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/responsive.bootstrap4.min.js"  type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/dataTables.buttons.min.js"     type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/jszip.min.js"                  type="text/javascript"></script>
+    <script src="/assets/vendor/datatable/buttons.html5.min.js"          type="text/javascript"></script>
+<script>
+  let today = new Date().toISOString().split("T")[0];
+  var dateFormat = "yy-mm-dd",
+  from = $( "#from" ).datepicker({
+      defaultDate: today,
+      changeMonth: true,
+      dateFormat: 'yy-mm-dd',
+      numberOfMonths: 1,
+      showAnim: 'slideDown',
+      firstDay: 0,
+    })
+    .on( "change", function() {
+      to.datepicker( "option", "minDate", getDate( this ) );
+    }),
+  to = $( "#to" ).datepicker({
+    defaultDate: "+1w",
+    changeMonth: true,
+    dateFormat: 'yy-mm-dd',
+    numberOfMonths: 1,
+    showAnim: 'slideDown',
+    firstDay: 0,
+  })
+  .on( "change", function() {
+    from.datepicker( "option", "maxDate", getDate( this ) );
+  });
+  function getDate( element ) {
+    var date;
+    try {
+      date = $.datepicker.parseDate( dateFormat, element.value );
+    } catch( error ) {
+      date = null;
+    }
+
+    return date;
+  }
+  let tomorrow = new Date(new Date(today).setDate(new Date(today).getDate() + 1 )).toISOString().split("T")[0];
+  let previousMonth = new Date(new Date(today).setDate(new Date(today).getDate() - 30 )).toISOString().split("T")[0];
+  
+  $("#from").val(previousMonth);
+  $("#to").val(tomorrow);
+  $('#datatable').DataTable(); 
+  $( document ).ready(function() {
+    $('.js-example-basic-single').select2();
+    GetData(); 
+  });
+
+  function GetData() {
+    let dataArg = {
+        User: "{{user.username}}",
+        minDate: $("#from").val(),
+        maxDate: $("#to").val(),
+    };
+
+    if ($("#centre").val() != "-"){            dataArg["Centre"]    = $("#centre").val() }
+    Swal.fire({
+        title: "<strong class='textDark'> Merci de patienter </strong> ",
+        html: 'Extraction des données en cours...',
+    });
+    Swal.showLoading();
+    $.ajax({
+        type: "Get",
+        url: "/api/Regdor/",
+        data: dataArg,
+        dataType: 'json',
+        async: true,
+        headers:{"X-CSRFToken": "{{ csrf_token }}"},
+        success: function (Rslt) //on recieve of reply
+        {
+            //console.log(Rslt);
+            Page = "";
+            Rslt.forEach((element) => {
+              //========================================================
+              //========================================================
+                Page += '<tr id="row_'+ element.id+ '" > '+
+                '<td class="align-middle font-weight-bold text-xs text-center">'+ element.id+ '</td>' +
+                '<td class="align-middle font-weight-bold text-xs text-center">'+ element.dateCreate+ '</td>'+
+                '<td class="align-middle font-weight-bold text-xs text-center">'+ element.Centre.name+ '</td>';
+                
+                if(element.contenu != null)
+                  Page += '<td class="align-middle text-xs text-center">'+
+                    '<a href="#"  onclick="DisplayPicture(\''+element.contenu+'\')" ><i class="fa fa-picture "></i>'+
+                      '<img class="bg-cover img-thumbnail" loading="lazy" src='+element.contenu+' alt="Image Contenu" height="100px"  width="100px" >'+
+                    '</a>'+
+                  '</td>';
+                else
+                  Page += '<td class="align-middle text-xs text-center"><i class="fas fa-2x fa-eye-slash text-danger"></i></td>';
+                
+                Page += '<td class="align-middle text-center">';
+                  if (element.comment == null)
+                    Page += '<a href="javascript:ModifyItem('+element.id+');" class="btn btn-warning mb-0"><i class="fa fa-check-circle-o"></i> Observation </a>';
+                  else
+                    Page += '<span class="align-middle text-xs fw-bold text-center" >'+ element.comment+'</span>'
+                Page += '</td>';
+                Page += '</tr>';
+              //========================================================
+              //========================================================
+            })
+					  CustomConfigTable(Page, [0,1,2,3,4,5,6] ,$("#from").val() + " - " + $("#to").val() );
+             
+            Swal.close();
+        },
+        error: function (xhr, status, error) {
+            ErrorDisplay(xhr, status, error);
+        }
+
+    });
+    
+  }
+  function ModifyItem(theID){
+    var mySN="";
+    Swal.fire({
+      title:"Ajouté une observation" ,
+      text: "Confirmer l'observation de l'enregistrement "+theID+"? ",
+      icon: "info",
+      input: 'textarea',
+        inputAttributes: {
+          autocapitalize: 'off',
+      },
+      showCancelButton: true,
+      backdrop: true,
+      cancelButtonColor: '#6c757d',
+      confirmButtonColor: '#4caf50',
+      confirmButtonText: 'Confirmer',
+      cancelButtonText: 'Annuler',
+      showLoaderOnConfirm: true,
+      preConfirm: (varInput) => {  return  varInput},
+      inputValidator: (value) => {
+        if (!value) 
+          return "Prière d'introduire l'observation"
+        else 
+          return null
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+      if (result.value) {
+        $.ajax({
+          url: "/api/Regdor/"+theID+"/",
+          type: "PATCH",
+          async: false,
+          scriptCharset: "utf-8",
+          data: {comment: result.value},
+          dataType: "JSON",
+          headers:{"X-CSRFToken": "{{ csrf_token }}"},
+          success: function (result) {
+            Swal.fire({
+              icon: 'success',
+              title: '<span class="textDark"> Traitée avec succès. </span>',
+              showConfirmButton: false,
+              backdrop: true,
+              timer: 1000
+            })
+            .then(() => { location.reload(); })
+          },
+          error: function (xhr, status, error) {
+            ErrorDisplay(xhr, status, error);
+          }
+              
+      })
+        }
+      });
+     
+  }
+  function StringFilter(data) {
+    let str = null
+    str = data.trim()
+    //str = str.replace(/[^a-zA-Z0-9 -:]/g, "")
+    str = str.replace('<div class="align-middle bg-gradient-info font-weight-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('<div class="align-middle bg-gradient-success font-weight-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('<div class="align-middle bg-gradient-danger font-weight-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('<div class="align-middle bg-gradient-warning font-weight-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('<div class="align-middle bg-gradient-info font-weight-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('<div class="align-middle bg-gradient-secondary font-weight-bold text-white text-center m-1" style="border-radius: 10px ;">',"")
+    str = str.replace('</div>',"").replace('&nbsp;',"").replace('&nbsp;',"")
+    str = str.replace('<a href="/media/voucher/',"")
+    str = str.replace('" target="_blank"> '," - ")
+    str = str.replace('</a>',"")
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  }
+  function CustomConfigTable(Page, VisibleColumn, DateRange) {
+    $.fn.dataTable.ext.pager.numbers_length = 5;
+
+    if ( $.fn.dataTable.isDataTable('#datatable') ) {
+        $('#datatable').DataTable().destroy();
+        $('datatable').empty();
+      }
+      if(Page != "-")
+        $("#TBL").html(Page);
+      $('#datatable').DataTable( {
+        //language: datatableAR ,  
+        
+        pageLength : 10,
+        dom: 'lBfrtip', //With ligne per page select
+        buttons: [
+                
+                ],
+                            
+        order:[[  0 , "desc" ]]
+        } );
+      $('#datatable').DataTable(); 
+  }
+  function DisplayPicture(myPicture){
+  //Page =  '<img class="img-thumbnail" src='+myPicture+' height="90%"  width="90%"/><a class="btn btn-primary   fw-bold m-3" download="'+ myPicture +'" href="'+ myPicture +'" title="Image"   target="_blank">Télécharger</a>';
+  Swal.fire({
+    //title: "Contenu" ,
+    //html: Page,
+    html: '<a class="btn btn-primary fw-bold m-3" download="'+ myPicture +'" href="'+ myPicture +'" title="Image"   target="_blank">Télécharger</a>  <button type="button" class="btn btn-danger m-2"  onclick="Swal.close();"  aria-label="">Fermer</button>',
+    width: '800px',
+    text: 'Modal with a custom image.',
+    imageUrl: myPicture,
+    imageWidth: 800,
+    padding: '1em',
+    backdrop: true,
+    //imageHeight: 200,
+    imageAlt: 'Image registre',
+    showCancelButton: false,
+    showConfirmButton: false,
+    confirmButtonColor: '#4caf50',
+    confirmButtonText: 'Fermer',
+    });
+
+  }
+  function DisplayComment(myComment){
+    let mytitle = "Motif du traitement";
+    if (myComment.length==0)
+      mytitle = "Aucun motif du traitement";
+    Swal.fire({
+      title: mytitle ,
+      text: myComment,
+      backdrop: true,
+      showCancelButton: false,
+      showConfirmButton: true,
+      confirmButtonColor: '#4caf50',
+      confirmButtonText: 'Fermer',
+      });
+  
+  }
+</script>
+
+  
+{% endblock JSAnnex %}  

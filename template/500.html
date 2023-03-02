@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% load static %}
+{% block title %} Home Page{% endblock %}
+{% block CustomHead %}{% endblock CustomHead %} 
+{% block content %}
+ <!-- 500 -->
+ <section class="error-area">
+  <div class="error-item  mt-5">
+    <div class="text-center  mt-5">
+        <div class="error-text m-3">
+            <h1>500!</h1>
+            <span class="text-black font-weight-bold">Erreur serveur!</span>
+            <br>
+            <p>Nous vous remercions pour votre patience, prière de communiquer l'erreur au service technique :<a href="mailto:mohammed.chalouli@algerietelecom.dz?subject=Voucher Technical Issue!&body=Technical Issue : {{exception}}" class="text-black font-weight-bold"> mohammed.chalouli@algerietelecom.dz  </a></p>
+            <span>Technical details : {{exception}}</span>
+            <br>
+            <a class=" mt-5 btn btn-primary" href="/"> la page d'accueil</a>
+            
+
+        </div>
+    </div>
+</div>
+</section>
+<!-- End 404 -->
+{% endblock content %}
+{% block JSAnnex %} {% endblock JSAnnex %}  

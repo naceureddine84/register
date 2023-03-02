@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicon.png">
+  <link rel="icon" type="image/png"   href="/assets/img/favicon.png">
+  <title> Registre </title>
+  
+  <meta name="subject"                content="The Registre">
+  <meta name="author" 		            content="CHALOULI Mohammed | Medchalouli@live.fr" />
+  <meta name="viewport"               content="width=device-width, initial-scale=1.0">
+
+  <meta charset="utf-8">
+  <meta http-equiv="expires" content="0" />
+  <meta http-equiv="Cache-Control"    content="max-age=31536000">
+  <meta http-equiv="Cache-Control"    content="must-revalidate">
+  <meta http-equiv="content-type" 	  content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" 	content="IE=edge">
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="/assets/webfonts/Montserrat.css" />
+  <!-- Nucleo Icons -->
+  <link href="/assets/css/nucleo-icons.css"   rel="stylesheet" />
+  <link href="/assets/css/nucleo-svg.css"     rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+  <link href="/assets/css/all.min.css"     rel="stylesheet" />
+  <!-- Material Icons -->
+  <link href="/assets/css/materialdesignicons.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="/assets/css/select2.min.css"  rel="stylesheet" />
+  <link href="/assets/css/jquery-ui.css"    rel="stylesheet" />
+  <link href="/assets/css/material-dashboard.css?v=3.4.1" rel="stylesheet" id="pagestyle"  />
+  <link href="/assets/css/night.css?V2"     rel="stylesheet" />
+  <link href="/assets/img/logo.png"         rel="icon"    type="image/png" >
+  
+  {% block CustomHead %} 
+
+  {% endblock CustomHead %}
+  
+</head>
+
+<!-- <body class="g-sidenav-show  bg-gray-200 dark-version"> -->
+<body class="g-sidenav-show  bg-gray-200 ">
+  <script>
+    // Render blocking JS:
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if (localStorage.getItem("dark") === null) {
+          localStorage.setItem("dark",1);
+        }
+      }
+      if (localStorage.dark == 1) {
+        document.body.classList.add("dark-version");
+      } 
+    } catch(e) {
+      console.log(e);
+    }
+    //if (localStorage.theme) document.documentElement.setAttribute("data-theme", localStorage.theme);
+  </script>
+  {% if user.role == 4 %}
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " style="background-image: linear-gradient(195deg, #432f10 0%, #2f24175c 100%);" id="sidenav-main">
+  {% else  %}
+  <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark" id="sidenav-main">
+    
+  {% endif %}  
+    <div class="sidenav-header">
+      <i class="fas fa-times p-3 cursor-pointer position-absolute end-0 top-0 d-none d-xl-none text-white" aria-hidden="true" id="iconSidenav"></i>
+      <a class="navbar-brand m-0" href="/" target="_blank">
+        <img src="/assets/img/logo-two.png" class="navbar-brand-img h-100" alt="main_logo">
+      
+        {% if user.role == 4 %}
+          <span class="ms-1 fw-bold text-white  ">Registre Or</span>
+        {% else %}
+          <span class="ms-1 fw-bold  text-xs text-white  ">Registre Doléance</span>
+        {% endif %}
+
+
+      </a>
+    </div>
+    <hr class="horizontal light mt-0 mb-2">
+    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+      {% if user.role != 4 %}
+        <li class="nav-item">
+          <a class="nav-link   {{MenuDash}}" href="/">
+            <div class="  text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">dashboard</i>
+            </div>
+            <span class="nav-link-text ms-1">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link   {{MenuRegistreStat}}" href="/registre_stat/">
+            <div class="  text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">assessment</i>
+            </div>
+            <span class="nav-link-text ms-1"> Suivi des enregistrements </span>
+          </a>
+        </li>        
+        {% endif %}
+        {% if user.role == 4 %}
+        <li class="nav-item">
+          <a class="nav-link fw-bold" style="background-color: #ffc107b8!important;" href="/registre_Or/">
+            <div class="  text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">auto_fix_high</i>
+            </div>
+            <span class="nav-link-text ms-1"> Suivi de registre d'or </span>
+          </a>
+        </li>
+        {% endif %}
+        <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs   font-weight-bolder opacity-8"></h6>
+        </li>
+        
+        <!-- <li class="nav-item">
+          <a class="nav-link   " href="/logout/">
+            <div class="  text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">logout</i>
+            </div>
+            <span class="nav-link-text ms-1">Quitter</span>
+          </a>
+        </li> -->
+       
+      </ul>
+    </div>
+     
+  </aside>
+  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    
+     <!-- Navbar -->
+     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-2  border-radius-xl" id="navbarBlur" data-scroll="true">
+      <div class="container-fluid p-1">
+        <nav aria-label="breadcrumb">
+          {% if user.role == 4 %}
+            <h4 class="mt-2 d-none d-md-block d-lg-block" >Bienvenue <span class="text-warning  font-weight-bolder"> {{user.fullname}}</span></h4>
+          {% else %}
+            <h4 class="mt-2 d-none d-md-block d-lg-block" >Bienvenue <span class="text-success  font-weight-bolder"> {{user.fullname}}</span></h4>
+          {% endif %}
+          <h6 class=" text-sm text-xs mt-2 d-block d-md-none mt-2 ps-2"> Registre Doléances </h6>
+
+        </nav>
+        <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 pe-2" id="navbar">
+          <div class="ms-md-auto pe-md-3 d-flex align-items-center ">
+            
+          </div>
+          <ul class="navbar-nav  justify-content-end">
+            <li class=" nav-item d-flex align-items-center px-3 mt-2">
+              <input type="checkbox" id="darkmodeToggle" onchange="DarkModeToggling(this)"/> 
+             
+              <label  id="ToggleDarkLabel" for="darkmodeToggle"> 
+                <svg version="1.1" class="sun" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  viewBox="0 0 496 496" style="enable-background:new 0 0 496 496;" xml:space="preserve">
+                
+                      <rect x="152.994" y="58.921" transform="matrix(0.3827 0.9239 -0.9239 0.3827 168.6176 -118.5145)" width="40.001" height="16"/>
+                      <rect x="46.9" y="164.979" transform="matrix(0.9239 0.3827 -0.3827 0.9239 71.29 -12.4346)" width="40.001" height="16"/>
+                      <rect x="46.947" y="315.048" transform="matrix(0.9239 -0.3827 0.3827 0.9239 -118.531 50.2116)" width="40.001" height="16"/>
+                      <rect x="164.966" y="409.112" transform="matrix(-0.9238 -0.3828 0.3828 -0.9238 168.4872 891.7491)" width="16" height="39.999"/>
+                      <rect x="303.031" y="421.036" transform="matrix(-0.3827 -0.9239 0.9239 -0.3827 50.2758 891.6655)" width="40.001" height="16"/>
+                      <rect x="409.088" y="315.018" transform="matrix(-0.9239 -0.3827 0.3827 -0.9239 701.898 785.6559)" width="40.001" height="16"/>
+                      <rect x="409.054" y="165.011" transform="matrix(-0.9239 0.3827 -0.3827 -0.9239 891.6585 168.6574)" width="40.001" height="16"/>
+                      <rect x="315.001" y="46.895" transform="matrix(0.9238 0.3828 -0.3828 0.9238 50.212 -118.5529)" width="16" height="39.999"/>
+                      <path d="M248,88c-88.224,0-160,71.776-160,160s71.776,160,160,160s160-71.776,160-160S336.224,88,248,88z M248,392
+                        c-79.4,0-144-64.6-144-144s64.6-144,144-144s144,64.6,144,144S327.4,392,248,392z"/>
+                      <rect x="240" width="16" height="72"/>
+                      <rect x="62.097" y="90.096" transform="matrix(0.7071 0.7071 -0.7071 0.7071 98.0963 -40.6334)" width="71.999" height="16"/>
+                      <rect y="240" width="72" height="16"/>
+                      
+                        <rect x="90.091" y="361.915" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -113.9157 748.643)" width="16" height="71.999"/>
+                      <rect x="240" y="424" width="16" height="72"/>
+                      
+                        <rect x="361.881" y="389.915" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 397.8562 960.6281)" width="71.999" height="16"/>
+                      <rect x="424" y="240" width="72" height="16"/>
+                      <rect x="389.911" y="62.091" transform="matrix(0.7071 0.7071 -0.7071 0.7071 185.9067 -252.6357)" width="16" height="71.999"/>
+                </svg>
+               <svg version="1.1" class="moon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  viewBox="0 0 49.739 49.739" style="enable-background:new 0 0 49.739 49.739;" xml:space="preserve">
+               <path d="M25.068,48.889c-9.173,0-18.017-5.06-22.396-13.804C-3.373,23.008,1.164,8.467,13.003,1.979l2.061-1.129l-0.615,2.268
+                 c-1.479,5.459-0.899,11.25,1.633,16.306c2.75,5.493,7.476,9.587,13.305,11.526c5.831,1.939,12.065,1.492,17.559-1.258v0
+                 c0.25-0.125,0.492-0.258,0.734-0.391l2.061-1.13l-0.585,2.252c-1.863,6.873-6.577,12.639-12.933,15.822
+                 C32.639,48.039,28.825,48.888,25.068,48.889z M12.002,4.936c-9.413,6.428-12.756,18.837-7.54,29.253
+                 c5.678,11.34,19.522,15.945,30.864,10.268c5.154-2.582,9.136-7.012,11.181-12.357c-5.632,2.427-11.882,2.702-17.752,0.748
+                 c-6.337-2.108-11.473-6.557-14.463-12.528C11.899,15.541,11.11,10.16,12.002,4.936z"/>
+                </svg>
+              </label>
+            </li>
+            
+            <script>
+              try {
+                if (localStorage.dark == 1) { document.getElementById("darkmodeToggle").checked=true; } 
+              } catch(e) { 
+                console.log(e); }
+            </script>
+            
+            <li class="nav-item d-flex align-items-center">
+              <a href="/logout/" class="nav-link text-body font-weight-bold px-0">
+                
+                <span class="d-sm-inline d-none">Quitter</span>
+                <i class="fas fa-sign-out-alt  me-sm-1"></i>
+              </a>
+            </li>
+            <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+              <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                <div class="sidenav-toggler-inner">
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                  <i class="sidenav-toggler-line"></i>
+                </div>
+              </a>
+            </li>
+             
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+    <script src="/assets/js/core/jquery.min.js"></script>
+  
+    {% block content %}
+      <p>Hello</p>
+    {% endblock content %} 
+  
+    <footer class="footer pb-4" style=" bottom: 0; position: relative; width: 100%; ">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-12 my-auto">
+            <div class="copyright text-center text-sm h5">
+              © 2023, All rights reserved for Research and Development Unit (URD) - Algérie Télécom
+            </div>
+          </div>
+          <div class="col-lg-6">
+        
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+  
+  <!--   Core JS Files   -->
+  
+  <script src="/assets/js/core/core.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script src="/assets/js/jquery-ui.js?V3.1"></script>
+  <script src="/assets/js/jquery.validate.min.js"></script>
+  <script src="/assets/js/sweetalert2@9.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+  <script src="/assets/js/select2.min.js"></script>
+  <script src="/assets/js/material-dashboard.min.js?v=3.1.6"></script>
+
+  <script>
+
+    $(document).ready( function() {
+        
+    });
+    //$.datepicker.setDefaults($.extend($.datepicker.regional['ar-DZ']));
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  
+    var darkMode = "White";
+    try { 
+      if (localStorage.getItem("dark") == 1) {
+        darkMode = "dark";
+        //$('#darkmodeToggle').trigger( "click" );
+        //window.dispatchEvent(new Event('resize'));  
+      }
+    } catch(e) {}
+      
+    jQuery(document).ready(function ($) {
+      
+    });
+    function DarkModeToggling(checkbox) { 
+      
+      if(checkbox.checked){
+        $("body").addClass("dark-version");
+        darkMode = "dark";
+        localStorage.setItem("dark",1);
+      }else{
+        $("body").removeClass("dark-version");
+        darkMode = "white";
+        localStorage.setItem("dark",0);
+      }
+      w = 0;
+      window.dispatchEvent(new Event('resize'));
+      
+    }
+    function ErrorDisplay(xhr,status,error){
+      console.error(xhr.responseText);
+      Swal.fire({
+        // position: 'top-end',
+      icon: 'error',
+      title: "<strong class='textDark'>"+xhr.status +" " + error+"</strong>",
+      text: "Nous sommes entrain de travailler pour résoudre cet inconvénient.",
+      showConfirmButton: true,
+      confirmButtonText: 'Actualiser',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.reload();
+        }
+        })
+    }
+    // Form Validation
+    (function () {
+      'use strict'
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+    
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+    
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+  </script>
+  
+  
+  {% block JSAnnex %} 
+
+  {% endblock JSAnnex %} 
+</body>
+
+</html>

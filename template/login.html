@@ -1,0 +1,275 @@
+<!--
+=========================================================
+* Registre Project - v3.0.4
+=========================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/favicon.png">
+  <link rel="icon" type="image/png"   href="/assets/img/favicon.png">
+  <title> Registre </title>
+  
+  <meta name="subject"                content="The Registre">
+  <meta name="author" 		            content="CHALOULI Mohammed | Medchalouli@live.fr" />
+  <meta name="viewport"               content="width=device-width, initial-scale=1.0">
+
+  <meta charset="utf-8">
+  <meta http-equiv="expires" content="0" />
+  <meta http-equiv="Cache-Control"    content="max-age=31536000">
+  <meta http-equiv="Cache-Control"    content="must-revalidate">
+  <meta http-equiv="content-type" 	  content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" 	content="IE=edge">
+  
+  <!-- Fonts and icons -->
+  <link rel="stylesheet" type="text/css" href="/assets/webfonts/Montserrat.css" />
+  <!-- Nucleo Icons -->
+  <link href="/assets/css/nucleo-icons.css"   rel="stylesheet" />
+  <link href="/assets/css/nucleo-svg.css"     rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+  <link href="/assets/css/all.min.css"        rel="stylesheet" />
+  <!-- Material Icons -->
+  <link href="/assets/css/materialdesignicons.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <!-- <link href="/assets/css/select2.min.css"  rel="stylesheet" /> -->
+  <!-- <link href="/assets/css/jquery-ui.css"    rel="stylesheet" /> -->
+  <link href="/assets/css/material-dashboard.css?v=3.4.1" rel="stylesheet" id="pagestyle"  />
+  <link href="/assets/css/night.css?V2"     rel="stylesheet" />
+  <link href="/assets/img/logo.png"         rel="icon"    type="image/png" >
+  <script src="/assets/js/core/jquery.min.js"></script>
+<style>
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  background-color: #0f0 !important;
+  padding: 0px;
+  margin: 0px;
+  }  
+  .eye-pass {
+    position: relative;
+    top: -49px;
+    height: 2px;
+    left: 84%;
+    margin-left: 240px;
+    direction: rtl;
+    color: #607d8b!important;
+  }
+</style>
+</head>
+
+<body class="m-0 p-0">
+  <script>
+    // Render blocking JS:
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if (localStorage.getItem("dark") === null) {
+          localStorage.setItem("dark",1);
+        }
+      }
+      if (localStorage.dark == 1) {
+        document.body.classList.add("dark-version");
+      } 
+    } catch(e) {
+      console.log(e);
+    }
+    //if (localStorage.theme) document.documentElement.setAttribute("data-theme", localStorage.theme);
+  </script>
+  <div class="container position-sticky z-index-sticky top-0">
+    <div class="row">
+      <div class="col-12">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+          <div class="container-fluid ps-2 pe-0">
+            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="/"><img src="/assets/img/logo.png" height="40px" alt="Logo">  <span style="color: #333!important;">Registre doléances </span></a>
+            <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon mt-2">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </span>
+            </button>
+            <div class="collapse navbar-collapse" id="navigation">
+              <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                  <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="/"><i class="fa fa-home opacity-6 text-dark me-1"></i>Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link me-2" href="https://www.algerietelecom.dz/en/"><i class="fa fa-link opacity-6 text-dark me-1"></i> Algérie Télécom</a>
+                </li>
+                <li  class="nav-item d-flex align-items-end px-5 ms-6 mt-0">
+                  <input  type="checkbox" id="darkmodeToggle" onchange="DarkModeToggling(this)"/> 
+                 
+                  <label  id="ToggleDarkLabel" for="darkmodeToggle"> 
+                    <svg version="1.1" class="sun" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                      viewBox="0 0 496 496" style="enable-background:new 0 0 496 496;" xml:space="preserve">
+                    
+                          <rect x="152.994" y="58.921" transform="matrix(0.3827 0.9239 -0.9239 0.3827 168.6176 -118.5145)" width="40.001" height="16"/>
+                          <rect x="46.9" y="164.979" transform="matrix(0.9239 0.3827 -0.3827 0.9239 71.29 -12.4346)" width="40.001" height="16"/>
+                          <rect x="46.947" y="315.048" transform="matrix(0.9239 -0.3827 0.3827 0.9239 -118.531 50.2116)" width="40.001" height="16"/>
+                          <rect x="164.966" y="409.112" transform="matrix(-0.9238 -0.3828 0.3828 -0.9238 168.4872 891.7491)" width="16" height="39.999"/>
+                          <rect x="303.031" y="421.036" transform="matrix(-0.3827 -0.9239 0.9239 -0.3827 50.2758 891.6655)" width="40.001" height="16"/>
+                          <rect x="409.088" y="315.018" transform="matrix(-0.9239 -0.3827 0.3827 -0.9239 701.898 785.6559)" width="40.001" height="16"/>
+                          <rect x="409.054" y="165.011" transform="matrix(-0.9239 0.3827 -0.3827 -0.9239 891.6585 168.6574)" width="40.001" height="16"/>
+                          <rect x="315.001" y="46.895" transform="matrix(0.9238 0.3828 -0.3828 0.9238 50.212 -118.5529)" width="16" height="39.999"/>
+                          <path d="M248,88c-88.224,0-160,71.776-160,160s71.776,160,160,160s160-71.776,160-160S336.224,88,248,88z M248,392
+                            c-79.4,0-144-64.6-144-144s64.6-144,144-144s144,64.6,144,144S327.4,392,248,392z"/>
+                          <rect x="240" width="16" height="72"/>
+                          <rect x="62.097" y="90.096" transform="matrix(0.7071 0.7071 -0.7071 0.7071 98.0963 -40.6334)" width="71.999" height="16"/>
+                          <rect y="240" width="72" height="16"/>
+                          
+                            <rect x="90.091" y="361.915" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 -113.9157 748.643)" width="16" height="71.999"/>
+                          <rect x="240" y="424" width="16" height="72"/>
+                          
+                            <rect x="361.881" y="389.915" transform="matrix(-0.7071 -0.7071 0.7071 -0.7071 397.8562 960.6281)" width="71.999" height="16"/>
+                          <rect x="424" y="240" width="72" height="16"/>
+                          <rect x="389.911" y="62.091" transform="matrix(0.7071 0.7071 -0.7071 0.7071 185.9067 -252.6357)" width="16" height="71.999"/>
+                    </svg>
+                   <svg version="1.1" class="moon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                      viewBox="0 0 49.739 49.739" style="enable-background:new 0 0 49.739 49.739;" xml:space="preserve">
+                   <path d="M25.068,48.889c-9.173,0-18.017-5.06-22.396-13.804C-3.373,23.008,1.164,8.467,13.003,1.979l2.061-1.129l-0.615,2.268
+                     c-1.479,5.459-0.899,11.25,1.633,16.306c2.75,5.493,7.476,9.587,13.305,11.526c5.831,1.939,12.065,1.492,17.559-1.258v0
+                     c0.25-0.125,0.492-0.258,0.734-0.391l2.061-1.13l-0.585,2.252c-1.863,6.873-6.577,12.639-12.933,15.822
+                     C32.639,48.039,28.825,48.888,25.068,48.889z M12.002,4.936c-9.413,6.428-12.756,18.837-7.54,29.253
+                     c5.678,11.34,19.522,15.945,30.864,10.268c5.154-2.582,9.136-7.012,11.181-12.357c-5.632,2.427-11.882,2.702-17.752,0.748
+                     c-6.337-2.108-11.473-6.557-14.463-12.528C11.899,15.541,11.11,10.16,12.002,4.936z"/>
+                    </svg>
+                  </label>
+                </li>
+                <script>
+                  try {
+                    if (localStorage.dark == 1) { document.getElementById("darkmodeToggle").checked=true; } 
+                  } catch(e) { 
+                    console.log(e); }
+                </script>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <!-- End Navbar -->
+      </div>
+    </div>
+  </div>
+  <main class="main-content  mt-0">
+    <div class="page-header align-items-start min-vh-100 blur" style="background-image: url('/assets/img/backlogin.jpg');">
+      <span class="mask bg-gradient-dark opacity-6"></span>
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-5 col-md-8 col-12 mx-auto">
+            <div class="card z-index-0 fadeIn3 fadeInBottom">
+              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-info shadow-primary border-radius-lg py-3 pe-1">
+                  <h5 class="text-white font-weight-bolder text-center mt-2 mb-0"> <i class="fas fa-users"></i> Authentification</h5>
+                 
+                </div>
+              </div>
+              <div class="card-body px-6">
+                <form  role="form" id="loginform" class="text-start" action="{{link}}" method="post" >
+                  {% csrf_token %}
+                  <div class="input-group input-group-outline my-3 "  >
+                    <label class="form-label">Nom d'utilisateur</label>
+                    <input type="text"   id="username" name="username"  class="form-control"  style="margin-top: 0.4rem !important;" >
+                    {% if request.GET.next %}
+                      <input type="hidden" name="next"  value="{{request.GET.next}}">
+                    {% endif %}
+                  </div>
+                  <div class="col-12">
+                    <div class="input-group input-group-outline my-3 ">
+                      <label class="form-label w-100">Mot de passe</label>
+                      <input type="password" id="password" name="password" required="required" autocomplete="off" class="form-control form-control w-100 pe-5" style="margin-top: 0.4rem !important;" >
+                      <i onclick="show('password')" class="fas fa-eye-slash eye-pass h5" id="display" style="margin: 18px -9px 0px 5px;"></i>
+                    </div>  
+                  </div>
+
+                  {% include "messages.html" %}
+
+                  <button type="submit" class="btn btn-primary w-100 mt-2 p-3" ><i class="fas fa-sign-in-alt"></i> Se connecter </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer position-absolute bottom-2 py-2 w-100">
+        <div class="container">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-12 my-auto">
+              <div class="copyright text-center text-sm text-white">
+                © <script>document.write(new Date().getFullYear())</script>, All rights reserved for Research and Development Unit (URD) - Algérie Télécom
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+  <!--   Core JS Files   -->
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
+  <!-- <script src="/assets/js/plugins/perfect-scrollbar.min.js"></script> -->
+  <script src="/assets/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var darkMode = "White";
+    try { 
+      if (localStorage.getItem("dark") == 1) {
+        darkMode = "dark";
+        //$('#darkmodeToggle').trigger( "click" );
+        //window.dispatchEvent(new Event('resize'));  
+      }
+    } catch(e) {}
+			 
+    jQuery(document).ready(function ($) {
+			
+    });
+    function DarkModeToggling(checkbox) { 
+      if(checkbox.checked){
+        $("body").addClass("dark-version");
+        darkMode = "dark";
+        localStorage.setItem("dark",1);
+      }else{
+        $("body").removeClass("dark-version");
+        darkMode = "white";
+        localStorage.setItem("dark",0);
+      }
+      window.dispatchEvent(new Event('resize'));
+      
+    }
+    function show(a) {
+      var x=document.getElementById(a);
+      var c=x.nextElementSibling
+      if (x.getAttribute('type') == "password") {
+      c.removeAttribute("class");
+      c.setAttribute("class","fas fa-eye eye-pass h5");
+      x.removeAttribute("type");
+        x.setAttribute("type","text");
+      } else {
+      x.removeAttribute("type");
+        x.setAttribute('type','password');
+     c.removeAttribute("class");
+      c.setAttribute("class","fas fa-eye-slash  eye-pass h5");
+      }
+    }
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="/assets/js/material-dashboard.min.js?v=3.0.4"></script>
+</body>
+
+</html>
